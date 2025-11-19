@@ -1,40 +1,38 @@
 commit-msg:
   commands:
-    lint-commit-msg:
-      run: npx commitlint --config commitlint.config.mjs --edit {1}
-
-pre-commit:
-  parallel: false
-  piped: true
-  commands:
-    lint-affected-prettier:
-      priority: 1
-      glob: '*.{cjs,js,mjs,ts}'
-      run: npx prettier --write {staged_files}
-      stage_fixed: true
-    lint-affected-eslint:
-      priority: 2
-      glob: '*.{cjs,js,mjs,ts}'
-      run: npx eslint --fix {staged_files}
-      stage_fixed: true
-
-pre-push:
-  parallel: true
-  commands:
-    build:
-      run: npm run build
-    test-unit:
-      run: npm run test
-    typecheck:
-      run: npm run typecheck
-
-post-merge:
-  parallel: false
-  commands:
-    install-deps:
-      run: npm install
+    test-commit-msg:
+      run: ./.commitlint.sh {1}
 
 output:
   - empty_summary
   - summary
   - skips
+
+post-merge:
+  parallel: false
+  commands:
+    install-deps:
+      run: bundle install
+    migrate-db:
+      run: bin/rails db:migrate
+
+pre-commit:
+  parallel: false
+  piped: true
+  commands:
+    rubocop-lint:
+      glob: '*.rb'
+      run: bundle exec rubocop --autocorrect {staged_files}
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  commands:
+    rubocop-check:
+      run: bundle exec rubocop
+    brakeman-security:
+      run: bundle exec brakeman --no-pager
+    bundler-audit:
+      run: bundle exec bundler-audit check --update
+    test:
+      run: bin/rails test
