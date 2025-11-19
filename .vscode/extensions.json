@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "kaiwood.endwise",
+    "shopify.ruby-lsp",
+    "aki77.rails-db-schema"
+  ]
+}

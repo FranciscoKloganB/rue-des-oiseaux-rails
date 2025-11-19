@@ -1,0 +1,10 @@
+{
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "html": "html",
+    "erb": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "class: \"|'([^\"|']*)"
+  ],
+}
