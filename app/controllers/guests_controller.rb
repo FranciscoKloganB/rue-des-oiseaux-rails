@@ -3,6 +3,7 @@ class GuestsController < ApplicationController
   end
 
   def list
+    @guests = Guest.all
   end
 
   def detail

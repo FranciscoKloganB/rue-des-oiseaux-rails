@@ -1,2 +1,8 @@
 <h1>Guests#list</h1>
-<p>Find me in app/views/guests/list.html.erb</p>
+<div>
+  <% @guests.each do |guest| %>
+    <p>
+      <%= guest.name %> - <%= guest.email %>
+    </p>
+  <% end %>
+</div>
