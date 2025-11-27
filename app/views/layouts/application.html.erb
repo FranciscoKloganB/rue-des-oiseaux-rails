@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="oiseaux">
   <head>
     <title><%= content_for(:title) || "Rue Des Oiseaux" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -26,6 +26,7 @@
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
+      <button class="btn btn-primary">Hello daisyUI!</button>
     </main>
   </body>
 </html>
