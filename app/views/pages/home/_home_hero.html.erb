@@ -1,0 +1,35 @@
+<div class="relative min-h-screen">
+  <div class="mx-auto max-w-7xl h-svh">
+    <div class="relative z-10 h-full lg:w-full lg:max-w-2xl">
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        class="absolute inset-y-0 right-8 hidden h-full w-80 translate-x-1/2 transform fill-base-100 lg:block"
+      >
+        <polygon points="0,0 90,0 50,100 0,100" />
+      </svg>
+
+      <div class="relative h-full flex items-center px-6 py-32 sm:py-40 lg:px-8 lg:py-56 lg:pr-0">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
+          <h1 class="text-5xl font-bold tracking-tight text-base-content sm:text-7xl">
+            Data to enrich your business
+          </h1>
+          <p class="mt-8 text-lg text-base-content/70 sm:text-xl">
+            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt
+            amet fugiat veniam occaecat fugiat aliqua.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-base-200 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 min-h-[50vh] lg:min-h-full">
+    <picture>
+      <source media="(min-width: 1280px)" srcset="<%= asset_path('home-hero-5x4.webp') %>" />
+      <source media="(min-width: 1024px)" srcset="<%= asset_path('home-hero-4x3.webp') %>" />
+      <source media="(min-width: 320px)" srcset="<%= asset_path('home-hero-5x4.webp') %>" />
+      <%= image_tag "home-hero-4x3.webp", alt: "Rue Des Oiseaux", class: "aspect-auto w-full h-full object-cover" %>
+    </picture>
+  </div>
+</div>
+

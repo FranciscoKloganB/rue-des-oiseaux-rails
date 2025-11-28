@@ -1,4 +1,18 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
+<div class="bg-base-100">
+  <%= render "pages/home/home_header" %>
+  <%= render "pages/home/home_hero" %>
 </div>
+
+<script>
+  // Mobile drawer toggle using DaisyUI
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    if (mobileMenuButton && mobileDrawer) {
+      mobileMenuButton.addEventListener('click', function() {
+        mobileDrawer.checked = true;
+      });
+    }
+  });
+</script>
