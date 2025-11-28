@@ -27,8 +27,8 @@ class HomePageTest < ApplicationSystemTestCase
   test "hamburger menu button is visible" do
     visit root_url
 
-    assert_selector "label[for='mobile-drawer']"
-    assert_selector "label[for='mobile-drawer'] svg"
+    assert_selector "button[aria-label='Open main menu']"
+    assert_selector "button[aria-label='Open main menu'] svg"
   end
 
   test "drawer sidebar is hidden by default" do
@@ -45,7 +45,7 @@ class HomePageTest < ApplicationSystemTestCase
     refute_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
 
     # Wait for drawer to open and check if menu items are visible
-    find("label[for='mobile-drawer']").click
+    find("button[aria-label='Open main menu']").click
     assert_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
     assert_selector ".drawer-side ul.menu li a", text: "Login", visible: :visible
   end
@@ -54,7 +54,7 @@ class HomePageTest < ApplicationSystemTestCase
     visit root_url
 
     # Open the drawer
-    find("label[for='mobile-drawer']").click
+    find("button[aria-label='Open main menu']").click
 
     # Check navigation links
     within ".drawer-side ul.menu" do
@@ -67,7 +67,7 @@ class HomePageTest < ApplicationSystemTestCase
     visit root_url
 
     # Open the drawer
-    find("label[for='mobile-drawer']").click
+    find("button[aria-label='Open main menu']").click
     assert_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
 
     # Click the overlay to close
@@ -77,11 +77,27 @@ class HomePageTest < ApplicationSystemTestCase
     refute_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
   end
 
+  test "clicking close button in drawer closes the drawer" do
+    visit root_url
+
+    # Open the drawer
+    find("button[aria-label='Open main menu']").click
+    assert_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
+
+    # Click the close button inside the drawer
+    within ".drawer-side" do
+      find("button#drawer-close-button").click
+    end
+
+    # Menu items should no longer be visible
+    refute_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
+  end
+
   test "drawer menu items are clickable" do
     visit root_url
 
     # Open the drawer
-    find("label[for='mobile-drawer']").click
+    find("button[aria-label='Open main menu']").click
 
     # Verify menu items are present and clickable
     within ".drawer-side ul.menu" do
@@ -101,7 +117,7 @@ class HomePageTest < ApplicationSystemTestCase
     visit root_url
 
     # Open drawer to check its styling
-    find("label[for='mobile-drawer']").click
+    find("button[aria-label='Open main menu']").click
 
     # Drawer side should have z-50 class
     assert_selector ".drawer-side.z-50"

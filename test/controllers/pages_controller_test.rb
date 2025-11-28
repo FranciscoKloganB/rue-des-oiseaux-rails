@@ -24,7 +24,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "home page contains hamburger menu button" do
     get root_url
-    assert_select "label[for='mobile-drawer']"
+    assert_select "button[aria-label='Open main menu']"
   end
 
   test "home page contains drawer sidebar" do
@@ -37,6 +37,11 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_select ".drawer-side ul.menu li a", text: "Register"
     assert_select ".drawer-side ul.menu li a", text: "Login"
+  end
+
+  test "sidebar contains close button" do
+    get root_url
+    assert_select ".drawer-side button#drawer-close-button[aria-label='Close menu']"
   end
 
   test "home page contains hero image" do
