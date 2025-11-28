@@ -35,7 +35,7 @@ class HomePageTest < ApplicationSystemTestCase
     visit root_url
 
     # Drawer checkbox should be unchecked by default
-    assert_selector "input#mobile-drawer[type='checkbox']:not(:checked)", visible: :hidden
+    assert_selector "input#app-sidebar-checkbox[type='checkbox']:not(:checked)", visible: :hidden
   end
 
   test "clicking hamburger menu opens drawer sidebar" do

@@ -1,5 +1,5 @@
 <div class="drawer-side z-50">
-  <label for="mobile-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+  <label for="app-sidebar-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
   <div class="bg-base-200 min-h-full w-80 p-4">
     <!-- Close button -->
     <div class="flex justify-end mb-4">
@@ -29,7 +29,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.getElementById('drawer-close-button');
-    const drawerCheckbox = document.getElementById('mobile-drawer');
+    const drawerCheckbox = document.getElementById('app-sidebar-checkbox');
 
     if (closeButton && drawerCheckbox) {
       closeButton.addEventListener('click', function() {

@@ -29,7 +29,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "home page contains drawer sidebar" do
     get root_url
-    assert_select "input#mobile-drawer[type='checkbox']"
+    assert_select "input#app-sidebar-checkbox[type='checkbox']"
     assert_select ".drawer-side"
   end
 
