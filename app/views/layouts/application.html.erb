@@ -33,5 +33,33 @@
       </div>
       <%= render "layouts/application_sidebar" %>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('rue-des-oiseaux:app-sidebar', function(event) {
+          const checkbox = document.getElementById('app-sidebar-checkbox');
+
+          if (!checkbox) {
+            console.warn('App sidebar checkbox not found');
+
+            return;
+          }
+
+          switch(event.detail.action) {
+            case 'toggle':
+              checkbox.checked = !checkbox.checked;
+              break;
+            case 'open':
+              checkbox.checked = true;
+              break;
+            case 'close':
+              checkbox.checked = false;
+              break;
+            default:
+              console.warn('Unknown app sidebar action:', event.detail.action);
+          }
+        });
+      });
+    </script>
   </body>
 </html>

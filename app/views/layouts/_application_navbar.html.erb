@@ -8,9 +8,9 @@
     <div class="navbar-end px-2">
       <button
         type="button"
+        id="app-navbar-sidebar-trigger"
         class="btn btn-ghost btn-circle drawer-button"
         aria-label="Open main menu"
-        onclick="document.getElementById('app-sidebar-checkbox').checked = !document.getElementById('app-sidebar-checkbox').checked"
       >
         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -19,4 +19,22 @@
     </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const trigger = document.getElementById('app-navbar-sidebar-trigger');
+
+    if (trigger) {
+      trigger.addEventListener('click', function() {
+        const event = new CustomEvent('rue-des-oiseaux:app-sidebar', {
+          detail: {
+            action: 'open'
+          }
+        });
+
+        document.dispatchEvent(event);
+      });
+    }
+  });
+</script>
 

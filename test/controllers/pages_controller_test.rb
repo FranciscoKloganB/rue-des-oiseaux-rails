@@ -41,7 +41,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "sidebar contains close button" do
     get root_url
-    assert_select ".drawer-side button#drawer-close-button[aria-label='Close menu']"
+    assert_select ".drawer-side button#app-sidebar-close-button[aria-label='Close menu']"
   end
 
   test "home page contains hero image" do

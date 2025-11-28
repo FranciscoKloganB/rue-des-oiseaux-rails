@@ -71,7 +71,7 @@ class HomePageTest < ApplicationSystemTestCase
     assert_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
 
     # Click the overlay to close
-    find(".drawer-overlay").click
+    find("#app-sidebar-overlay").click
 
     # Menu items should no longer be visible
     refute_selector ".drawer-side ul.menu li a", text: "Register", visible: :visible
@@ -86,7 +86,7 @@ class HomePageTest < ApplicationSystemTestCase
 
     # Click the close button inside the drawer
     within ".drawer-side" do
-      find("button#drawer-close-button").click
+      find("button#app-sidebar-close-button").click
     end
 
     # Menu items should no longer be visible

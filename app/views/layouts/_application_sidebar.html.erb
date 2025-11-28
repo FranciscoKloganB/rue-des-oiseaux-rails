@@ -1,11 +1,11 @@
 <div class="drawer-side z-50">
-  <label for="app-sidebar-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
+  <button for="app-sidebar-checkbox" aria-label="close sidebar" class="drawer-overlay" id="app-sidebar-overlay"></button>
   <div class="bg-base-200 min-h-full w-80 p-4">
     <!-- Close button -->
     <div class="flex justify-end mb-4">
       <button
         type="button"
-        id="drawer-close-button"
+        id="app-sidebar-close-button"
         class="btn btn-ghost btn-sm btn-circle"
         aria-label="Close menu"
       >
@@ -28,14 +28,21 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const closeButton = document.getElementById('drawer-close-button');
-    const drawerCheckbox = document.getElementById('app-sidebar-checkbox');
+    const closer = document.getElementById('app-sidebar-close-button');
+    const overlay = document.getElementById('app-sidebar-overlay');
 
-    if (closeButton && drawerCheckbox) {
-      closeButton.addEventListener('click', function() {
-        drawerCheckbox.checked = false;
+    function emitCloseEvent() {
+      const event = new CustomEvent('rue-des-oiseaux:app-sidebar', {
+        detail: {
+          action: 'close'
+        }
       });
+
+      document.dispatchEvent(event);
     }
+
+    closer.addEventListener('click', emitCloseEvent);
+    overlay.addEventListener('click', emitCloseEvent);
   });
 </script>
 
