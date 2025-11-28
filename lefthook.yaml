@@ -36,3 +36,5 @@ pre-push:
       run: bundle exec bundler-audit check --update
     test:
       run: bin/rails test
+    test-system:
+      run: bin/rails test:system
