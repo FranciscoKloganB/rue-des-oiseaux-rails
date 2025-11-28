@@ -24,7 +24,14 @@
   </head>
 
   <body>
-    <%= render "layouts/application_navbar" %>
-    <%= yield %>
+    <div class="drawer">
+      <input id="mobile-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <!-- Page content here -->
+        <%= render "layouts/application_navbar" %>
+        <%= yield %>
+      </div>
+      <%= render "layouts/application_sidebar" %>
+    </div>
   </body>
 </html>
