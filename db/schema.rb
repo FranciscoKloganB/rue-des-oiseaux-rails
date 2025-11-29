@@ -10,11 +10,5 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_19_224855) do
-  create_table "guests", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email"
-    t.string "name"
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema[8.1].define(version: 0) do
 end
