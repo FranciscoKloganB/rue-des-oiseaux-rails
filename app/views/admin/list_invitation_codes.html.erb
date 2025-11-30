@@ -1,0 +1,71 @@
+<section class="p-6 space-y-6">
+  <header>
+    <h1 class="text-3xl font-bold text-base-content">Invitation Codes</h1>
+    <p class="text-base-content/70">Generate, send, and review invitation codes in one place.</p>
+  </header>
+
+  <% flash.each do |type, message| %>
+    <% next if message.blank? %>
+    <div class="alert <%= type == "notice" ? "alert-success" : "alert-error" %> shadow-lg">
+      <span><%= message %></span>
+    </div>
+  <% end %>
+
+  <%= render "admin/create_invitation_codes" %>
+
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body space-y-4">
+      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 class="card-title">Existing Codes</h2>
+          <p class="text-sm text-base-content/70">
+            Showing <%= @invitation_codes.size %> of <%= @total_count %> invitation codes.
+          </p>
+        </div>
+        <div class="join">
+          <% prev_disabled = @page <= 1 %>
+          <%= link_to(prev_disabled ? "#" : admin_invitation_codes_path(page: @page - 1),
+                      class: "btn join-item #{prev_disabled ? 'btn-disabled' : 'btn-outline'}",
+                      aria: { disabled: prev_disabled },
+                      data: (prev_disabled ? { turbo: false } : {})) do %>
+            Previous
+          <% end %>
+
+          <% next_disabled = @page >= @total_pages %>
+          <%= link_to(next_disabled ? "#" : admin_invitation_codes_path(page: @page + 1),
+                      class: "btn join-item #{next_disabled ? 'btn-disabled' : 'btn-outline'}",
+                      aria: { disabled: next_disabled },
+                      data: (next_disabled ? { turbo: false } : {})) do %>
+            Next
+          <% end %>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Sent</th>
+              <th>Created at</th>
+              <th>Deleted at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @invitation_codes.any? %>
+              <%= render partial: "admin/invitation_code_row",
+                         collection: @invitation_codes,
+                         as: :code,
+                         locals: { current_page: @page } %>
+            <% else %>
+              <tr>
+                <td colspan="4" class="text-center text-base-content/70">No invitation codes found yet.</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+

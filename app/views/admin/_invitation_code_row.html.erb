@@ -1,0 +1,27 @@
+<tr id="<%= dom_id(code) %>">
+  <td class="font-mono text-lg tracking-wide text-base-content">
+    <%= code.token %>
+  </td>
+  <td>
+    <%= form_with model: code,
+                  url: toggle_admin_invitation_code_sent_path(code),
+                  method: :patch,
+                  class: "flex items-center gap-3" do |form| %>
+      <%= hidden_field_tag :page, current_page %>
+      <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" aria-label="<%= "Toggle sent status for #{code.token}" %>">
+        <%= form.check_box :sent,
+                           class: "toggle toggle-primary",
+                           checked: code.sent?,
+                           onchange: "this.form.requestSubmit()" %>
+        <span><%= code.sent? ? "Sent" : "Unset" %></span>
+      </label>
+    <% end %>
+  </td>
+  <td class="text-sm text-base-content/80">
+    <%= code.created_at&.to_fs(:long) %>
+  </td>
+  <td class="text-sm text-base-content/80">
+    <%= code.deleted_at&.to_fs(:long) || "—" %>
+  </td>
+</tr>
+

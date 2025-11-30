@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   get "/guests/:id", to: "guests#detail"
 
   delete "/guests/:id", to: "guests#delete"
+
+  post "admin/invitations/codes", to: "admin#create_invitation_codes", as: :create_admin_invitation_codes
+  get "admin/invitations/codes", to: "admin#list_invitation_codes", as: :admin_invitation_codes
+  patch "admin/invitations/codes/:id/toggle_sent",
+        to: "admin#toggle_invitation_code_sent",
+        as: :toggle_admin_invitation_code_sent
 end
