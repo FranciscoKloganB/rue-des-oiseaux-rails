@@ -10,5 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 0) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_30_003150) do
+  create_table "invitation_codes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index [ "token" ], name: "index_invitation_codes_on_token", unique: true
+  end
 end
