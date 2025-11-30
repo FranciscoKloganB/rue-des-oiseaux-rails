@@ -13,7 +13,7 @@
                            class: "toggle toggle-primary",
                            checked: code.sent?,
                            onchange: "this.form.requestSubmit()" %>
-        <span><%= code.sent? ? "Sent" : "Unset" %></span>
+        <span class="toggle-status"><%= code.sent? ? "Sent" : "Unset" %></span>
       </label>
     <% end %>
   </td>

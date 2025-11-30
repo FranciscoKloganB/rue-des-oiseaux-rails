@@ -25,12 +25,12 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
     visit admin_invitation_codes_url
 
     within "##{dom_id(code)}" do
-      refute_selector ".text-success", text: "Sent"
+      assert_selector ".toggle-status", text: "Unset"
       find("input.toggle").click
     end
 
     within "##{dom_id(code)}" do
-      assert_selector ".text-success", text: "Sent"
+      assert_selector ".toggle-status", text: "Sent"
     end
   end
 end

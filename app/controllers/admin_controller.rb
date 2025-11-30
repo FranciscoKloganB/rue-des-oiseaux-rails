@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   include ActionView::RecordIdentifier
-  PER_PAGE = 20
+  PER_PAGE = 10
 
   def list_invitation_codes
     load_invitation_codes

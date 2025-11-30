@@ -1,4 +1,4 @@
-<section class="px-2 md:px-4 lg:px-6 mx-auto max-w-7xl space-y-6">
+<section class="py-6 px-2 md:px-4 lg:px-6 mx-auto max-w-7xl space-y-6">
   <header class="px-2 md:px-0">
     <h1 class="text-3xl font-bold text-base-content">Invitation Codes</h1>
     <p class="text-base-content/70">Generate, send, and review invitation codes in one place.</p>
@@ -15,30 +15,11 @@
 
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body space-y-4">
-      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h2 class="card-title">Existing Codes</h2>
-          <p class="text-sm text-base-content/70">
-            Showing <%= @invitation_codes.size %> of <%= @total_count %> invitation codes.
-          </p>
-        </div>
-        <div class="join">
-          <% prev_disabled = @page <= 1 %>
-          <%= link_to(prev_disabled ? "#" : admin_invitation_codes_path(page: @page - 1),
-                      class: "btn join-item #{prev_disabled ? 'btn-disabled' : 'btn-outline'}",
-                      aria: { disabled: prev_disabled },
-                      data: (prev_disabled ? { turbo: false } : {})) do %>
-            Previous
-          <% end %>
-
-          <% next_disabled = @page >= @total_pages %>
-          <%= link_to(next_disabled ? "#" : admin_invitation_codes_path(page: @page + 1),
-                      class: "btn join-item #{next_disabled ? 'btn-disabled' : 'btn-outline'}",
-                      aria: { disabled: next_disabled },
-                      data: (next_disabled ? { turbo: false } : {})) do %>
-            Next
-          <% end %>
-        </div>
+      <div>
+        <h2 class="card-title">Existing Codes</h2>
+        <p class="text-sm text-base-content/70">
+          Showing <%= @invitation_codes.size %> of <%= @total_count %> invitation codes.
+        </p>
       </div>
 
       <div class="overflow-x-auto">
@@ -64,6 +45,26 @@
             <% end %>
           </tbody>
         </table>
+      </div>
+
+      <div class="flex justify-end">
+        <div class="join">
+          <% prev_disabled = @page <= 1 %>
+          <%= link_to(prev_disabled ? "#" : admin_invitation_codes_path(page: @page - 1),
+                      class: "btn join-item #{prev_disabled ? 'btn-disabled' : 'btn-outline'}",
+                      aria: { disabled: prev_disabled },
+                      data: (prev_disabled ? { turbo: false } : {})) do %>
+            Previous
+          <% end %>
+
+          <% next_disabled = @page >= @total_pages %>
+          <%= link_to(next_disabled ? "#" : admin_invitation_codes_path(page: @page + 1),
+                      class: "btn join-item #{next_disabled ? 'btn-disabled' : 'btn-outline'}",
+                      aria: { disabled: next_disabled },
+                      data: (next_disabled ? { turbo: false } : {})) do %>
+            Next
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
