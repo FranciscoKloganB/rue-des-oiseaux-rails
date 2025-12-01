@@ -33,4 +33,41 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
       assert_selector ".toggle-status", text: "Sent"
     end
   end
+
+  test "filters between active and deleted invitation codes" do
+    active = InvitationCode.create!(token: "ACTIVECODE01")
+    InvitationCode.create!(token: "DELETEDCODE1", deleted_at: Time.current)
+
+    visit admin_invitation_codes_url
+
+    assert_text active.token
+    refute_text "DELETEDCODE1"
+
+    click_on "Deleted"
+    assert_text "DELETEDCODE1"
+    refute_text active.token
+
+    click_on "All"
+    assert_text active.token
+    assert_text "DELETEDCODE1"
+  end
+
+  test "soft deleting an invitation code removes it from active list" do
+    code = InvitationCode.create!(token: "TRASHCODE012")
+
+    visit admin_invitation_codes_url
+
+    within "##{dom_id(code)}" do
+      find("button[aria-label='Delete invitation code #{code.token}']").click
+    end
+
+    within "dialog[open]" do
+      click_button "Delete"
+    end
+
+    assert_no_selector "##{dom_id(code)}"
+
+    click_on "Deleted"
+    assert_text code.token
+  end
 end

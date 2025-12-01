@@ -1,6 +1,9 @@
 class InvitationCode < ApplicationRecord
   TOKEN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".freeze
 
+  scope :active, -> { where(deleted_at: nil) }
+  scope :deleted, -> { where.not(deleted_at: nil) }
+
   validates :token, presence: true, uniqueness: true,
                     length: { is: 12 },
                     format: { with: /\A[A-Z0-9]+\z/, message: "must use A-Z or 0-9 characters" }
@@ -22,5 +25,9 @@ class InvitationCode < ApplicationRecord
 
   def toggle_sent!
     update!(sent: !sent)
+  end
+
+  def soft_delete!
+    update!(deleted_at: Time.current)
   end
 end

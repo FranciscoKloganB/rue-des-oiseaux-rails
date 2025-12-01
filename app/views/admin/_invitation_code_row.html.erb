@@ -1,6 +1,9 @@
 <tr id="<%= dom_id(code) %>">
   <td class="font-mono text-lg tracking-wide text-base-content">
     <%= code.token %>
+    <% if code.deleted_at.present? %>
+      <span class="badge badge-outline badge-error badge-sm ml-2">Deleted</span>
+    <% end %>
   </td>
   <td>
     <%= form_with model: code,
@@ -8,6 +11,7 @@
                   method: :patch,
                   class: "flex items-center gap-3" do |form| %>
       <%= hidden_field_tag :page, current_page %>
+      <%= hidden_field_tag :status, current_status %>
       <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" aria-label="<%= "Toggle sent status for #{code.token}" %>">
         <%= form.check_box :sent,
                            class: "toggle toggle-primary",
@@ -22,6 +26,57 @@
   </td>
   <td class="text-sm text-base-content/80">
     <%= code.deleted_at&.to_fs(:long) || "—" %>
+  </td>
+  <td class="text-right">
+    <% if code.deleted_at.present? %>
+      <button class="btn btn-ghost btn-circle btn-sm" disabled aria-disabled="true" title="Already deleted">
+        <svg class="size-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 6h18" stroke-linecap="round" />
+          <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+          <path d="M10 10v6m4-6v6" stroke-linecap="round" />
+          <path d="M9 6l1-2h4l1 2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    <% else %>
+      <div data-controller="confirm-delete" class="inline-flex flex-col items-end gap-2 w-full">
+        <%= form_with url: soft_delete_admin_invitation_code_path(code),
+                      method: :delete,
+                      class: "hidden",
+                      data: { confirm_delete_target: "form" } do %>
+          <%= hidden_field_tag :page, current_page %>
+          <%= hidden_field_tag :status, current_status %>
+        <% end %>
+
+        <button type="button"
+                class="btn btn-ghost btn-circle btn-sm text-error"
+                aria-label="Delete invitation code <%= code.token %>"
+                data-action="confirm-delete#show">
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 6h18" stroke-linecap="round" />
+            <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+            <path d="M10 10v6m4-6v6" stroke-linecap="round" />
+            <path d="M9 6l1-2h4l1 2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+
+        <dialog
+          class="modal modal-bottom sm:modal-middle"
+          data-confirm-delete-target="panel"
+          data-action="click->confirm-delete#dismissBackdrop"
+        >
+          <div class="modal-box">
+            <h3 class="text-lg font-bold text-base-content">Delete invitation code</h3>
+            <p class="py-4 text-base-content/70">
+              Once deleted, codes cannot be re-activated.
+            </p>
+            <div class="modal-action">
+              <button type="button" class="btn" data-action="confirm-delete#cancel">Cancel</button>
+              <button type="button" class="btn btn-error" data-action="confirm-delete#confirm">Delete</button>
+            </div>
+          </div>
+        </dialog>
+      </div>
+    <% end %>
   </td>
 </tr>
 

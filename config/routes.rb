@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   patch "admin/invitations/codes/:id/toggle_sent",
         to: "admin#toggle_invitation_code_sent",
         as: :toggle_admin_invitation_code_sent
+  delete "admin/invitations/codes/:id", to: "admin#soft_delete_invitation_code", as: :soft_delete_admin_invitation_code
 end

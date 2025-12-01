@@ -2,6 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">Create Invitation Codes</h2>
     <%= form_with url: create_admin_invitation_codes_path, method: :post, local: true, class: "flex flex-col gap-4 md:flex-row md:items-end" do |form| %>
+      <%= hidden_field_tag :status, status %>
       <div class="form-control w-full max-w-xs">
         <label class="label" for="invitation_code_count">
           <span class="label-text">Number of codes</span>

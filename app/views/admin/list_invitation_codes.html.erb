@@ -6,20 +6,48 @@
 
   <% flash.each do |type, message| %>
     <% next if message.blank? %>
-    <div class="alert <%= type == "notice" ? "alert-success" : "alert-error" %> shadow-lg">
+    <div
+      role="alert"
+      class="alert alert-vertical sm:alert-horizontal shadow-lg <%= type == "notice" ? "alert-success" : "alert-error" %>"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current h-6 w-6 shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
       <span><%= message %></span>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="btn btn-sm"
+          onclick="this.closest('.alert').remove()"
+          aria-label="Dismiss alert"
+        >
+          Dismiss
+        </button>
+      </div>
     </div>
   <% end %>
 
-  <%= render "admin/create_invitation_codes" %>
+  <%= render "admin/create_invitation_codes", status: @status %>
 
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body space-y-4">
-      <div>
-        <h2 class="card-title">Existing Codes</h2>
-        <p class="text-sm text-base-content/70">
-          Showing <%= @invitation_codes.size %> of <%= @total_count %> invitation codes.
-        </p>
+      <% status_label = (@status == "all" ? "total" : @status) %>
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 class="card-title">Existing Codes</h2>
+          <p class="text-sm text-base-content/70">
+            Showing <%= @invitation_codes.size %> of <%= @total_count %> <%= status_label %> invitation codes.
+          </p>
+        </div>
+
+        <div class="join">
+          <% filters = { "active" => "Active", "deleted" => "Deleted", "all" => "All" } %>
+          <% filters.each do |value, label| %>
+            <%= link_to label,
+                        admin_invitation_codes_path(status: value),
+                        class: "btn join-item #{'btn-primary' if @status == value}" %>
+          <% end %>
+        </div>
       </div>
 
       <div class="overflow-x-auto">
@@ -30,6 +58,7 @@
               <th>Sent</th>
               <th>Created at</th>
               <th>Deleted at</th>
+              <th class="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -37,10 +66,12 @@
               <%= render partial: "admin/invitation_code_row",
                          collection: @invitation_codes,
                          as: :code,
-                         locals: { current_page: @page } %>
+                         locals: { current_page: @page, current_status: @status } %>
             <% else %>
               <tr>
-                <td colspan="4" class="text-center text-base-content/70">No invitation codes found yet.</td>
+                <td colspan="5" class="text-center text-base-content/70">
+                  No <%= status_label %> invitation codes found.
+                </td>
               </tr>
             <% end %>
           </tbody>
@@ -50,7 +81,7 @@
       <div class="flex justify-end">
         <div class="join">
           <% prev_disabled = @page <= 1 %>
-          <%= link_to(prev_disabled ? "#" : admin_invitation_codes_path(page: @page - 1),
+          <%= link_to(prev_disabled ? "#" : admin_invitation_codes_path(page: @page - 1, status: @status),
                       class: "btn join-item #{prev_disabled ? 'btn-disabled' : 'btn-outline'}",
                       aria: { disabled: prev_disabled },
                       data: (prev_disabled ? { turbo: false } : {})) do %>
@@ -58,7 +89,7 @@
           <% end %>
 
           <% next_disabled = @page >= @total_pages %>
-          <%= link_to(next_disabled ? "#" : admin_invitation_codes_path(page: @page + 1),
+          <%= link_to(next_disabled ? "#" : admin_invitation_codes_path(page: @page + 1, status: @status),
                       class: "btn join-item #{next_disabled ? 'btn-disabled' : 'btn-outline'}",
                       aria: { disabled: next_disabled },
                       data: (next_disabled ? { turbo: false } : {})) do %>
