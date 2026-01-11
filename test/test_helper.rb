@@ -13,3 +13,10 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+require "view_component/test_helpers"
+
+class ViewComponent::TestCase < ActiveSupport::TestCase
+  include ViewComponent::TestHelpers
+  include Capybara::Node::Matchers
+end
