@@ -1,24 +1,48 @@
-# README
+# Rue des Oiseaux
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README documents the steps necessary to get the application up and running.
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+### Prerequisites
 
-* System dependencies
+- Ruby 3.4.4
+- SQLite3
 
-* Configuration
+### Setup
 
-* Database creation
+Run the setup script to install dependencies and prepare the database:
 
-* Database initialization
+```bash
+bin/setup
+```
 
-* How to run the test suite
+### Running the Application
 
-* Services (job queues, cache servers, search engines, etc.)
+Start the development server:
 
-* Deployment instructions
+```bash
+bin/dev
+```
 
-* ...
+This command uses `foreman` to start the Rails server and the Tailwind CSS watcher as defined in `Procfile.dev`.
+
+### Database Management
+
+To run pending migrations:
+
+```bash
+bin/rails db:migrate
+```
+
+To rollback the last migration:
+
+```bash
+bin/rails db:rollback
+```
+
+To generate a new migration:
+
+```bash
+bin/rails generate migration MigrationName
+```
