@@ -1,5 +1,5 @@
-<div class="drawer-side z-50">
-  <button for="app-sidebar-checkbox" aria-label="close sidebar" class="drawer-overlay" id="app-sidebar-overlay"></button>
+<div class="drawer-side z-50" data-testid="drawer-sidebar">
+  <button for="app-sidebar-checkbox" aria-label="close sidebar" class="drawer-overlay" id="app-sidebar-overlay" data-testid="drawer-overlay"></button>
   <div class="bg-base-200 min-h-full w-80 p-4">
     <!-- Close button -->
     <div class="flex justify-end mb-4">
@@ -8,6 +8,7 @@
         id="app-sidebar-close-button"
         class="btn btn-ghost btn-sm btn-circle"
         aria-label="Close menu"
+        data-testid="drawer-close-button"
       >
         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

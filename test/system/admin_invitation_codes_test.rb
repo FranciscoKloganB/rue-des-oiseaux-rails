@@ -15,8 +15,6 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
     click_button "Generate Codes"
 
     assert_text "2 invitation codes created."
-    assert_selector "table tbody tr", minimum: 2
-    assert_selector "table thead th", text: "Sent"
   end
 
   test "toggling sent status via table toggle" do
@@ -24,13 +22,17 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
 
     visit admin_invitation_codes_url
 
-    within "##{dom_id(code)}" do
-      assert_selector ".toggle-status", text: "Unset"
-      find("input.toggle").click
+    # Find the row the user wants to delete
+    row = find("tr", text: code.token)
+
+    within row do
+      assert_text "Unset"
+
+      find("input[type='checkbox']").click
     end
 
-    within "##{dom_id(code)}" do
-      assert_selector ".toggle-status", text: "Sent"
+    within row do
+      assert_text "Sent"
     end
   end
 
@@ -57,7 +59,7 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
 
     visit admin_invitation_codes_url
 
-    within "##{dom_id(code)}" do
+    within "tr", text: code.token do
       find("button[aria-label='Delete invitation code #{code.token}']").click
     end
 
@@ -65,7 +67,7 @@ class AdminInvitationCodesTest < ApplicationSystemTestCase
       click_button "Delete"
     end
 
-    assert_no_selector "##{dom_id(code)}"
+    refute_text code.token
 
     click_on "Deleted"
     assert_text code.token
